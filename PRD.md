@@ -13,11 +13,11 @@ An interactive documentation and learning tracker that teaches prompt engineerin
 ## Essential Features
 
 ### User Authentication
-- **Functionality**: Email/password sign-up, sign-in, and password reset via Firebase Authentication
-- **Purpose**: Enables personalized learning experiences and future cloud synchronization of progress
+- **Functionality**: Passwordless email link sign-in via Firebase Authentication
+- **Purpose**: Enables personalized learning experiences and future cloud synchronization of progress with seamless, secure authentication
 - **Trigger**: User clicks "Sign In" button in header
-- **Progression**: Click Sign In → Choose sign up/sign in → Enter email/password → Authenticated → User menu appears
-- **Success criteria**: Users can create accounts, sign in, sign out, and reset passwords; authentication state persists across page refreshes
+- **Progression**: Click Sign In → Enter email → Receive sign-in link → Click link in email → Authenticated → User menu appears
+- **Success criteria**: Users can sign in via email link without passwords; authentication state persists across page refreshes; links expire after 60 minutes
 
 ### Lesson Navigation & Progress Tracking
 - **Functionality**: Browse lessons organized by topic with visual progress indicators
@@ -49,8 +49,8 @@ An interactive documentation and learning tracker that teaches prompt engineerin
 
 ## Edge Case Handling
 - **Unauthenticated users**: App remains fully functional; progress stored locally with banner encouraging sign-in for cloud sync
-- **Authentication errors**: Clear, friendly error messages for common issues (wrong password, email in use, weak password)
-- **Password reset**: Simple flow with email link and confirmation messages
+- **Authentication errors**: Clear, friendly error messages for common issues (invalid email, expired link, too many requests)
+- **Email link expiration**: Clear messaging when sign-in link has expired with option to request new link
 - **Empty states**: Show encouraging message and getting started guide when no lessons completed yet
 - **Long content**: Implement smooth scrolling and clear section breaks for lengthy lessons
 - **Incomplete exercises**: Allow users to save draft prompts and return later without losing work
@@ -101,8 +101,7 @@ Animations should be subtle and purposeful, reinforcing the sense of progress an
 ## Component Selection
 
 - **Components**: 
-  - `Dialog` for authentication modal with tabs for sign-in/sign-up
-  - `Tabs` for switching between sign-in and sign-up within auth modal
+  - `Dialog` for authentication modal with email link form
   - `Avatar` for user profile display in header menu
   - `DropdownMenu` for user account menu with sign-out option
   - `Alert` for authentication error messages
@@ -130,7 +129,7 @@ Animations should be subtle and purposeful, reinforcing the sense of progress an
   - `SignIn` for authentication button
   - `SignOut` for sign-out menu item
   - `EnvelopeSimple` for email input fields
-  - `LockKey` for password input fields
+  - `CheckCircle` for email sent confirmation
   - `BookOpen` for lessons and documentation
   - `CheckCircle` for completed items
   - `Circle` for incomplete items  
