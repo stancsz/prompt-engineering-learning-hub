@@ -24,7 +24,7 @@ export function useAuth() {
 
   const sendSignInLink = async (email: string) => {
     const actionCodeSettings = {
-      url: window.location.href,
+      url: window.location.origin + window.location.pathname,
       handleCodeInApp: true,
     }
     return sendSignInLinkToEmail(auth, email, actionCodeSettings)
