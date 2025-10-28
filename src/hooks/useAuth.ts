@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
 import { 
   User,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
   signOut as firebaseSignOut,
   onAuthStateChanged,
-  sendPasswordResetEmail
+  sendSignInLinkToEmail,
+  isSignInWithEmailLink,
+  signInWithEmailLink as firebaseSignInWithEmailLink
 } from 'firebase/auth'
 import { auth } from '@/lib/firebase'
 
@@ -22,28 +22,32 @@ export function useAuth() {
     return unsubscribe
   }, [])
 
-  const signIn = async (email: string, password: string) => {
-    return signInWithEmailAndPassword(auth, email, password)
+  const sendSignInLink = async (email: string) => {
+    const actionCodeSettings = {
+      url: window.location.href,
+      handleCodeInApp: true,
+    }
+    return sendSignInLinkToEmail(auth, email, actionCodeSettings)
   }
 
-  const signUp = async (email: string, password: string) => {
-    return createUserWithEmailAndPassword(auth, email, password)
+  const isSignInLink = () => {
+    return isSignInWithEmailLink(auth, window.location.href)
+  }
+
+  const signInWithLink = async (email: string) => {
+    return firebaseSignInWithEmailLink(auth, email, window.location.href)
   }
 
   const signOut = async () => {
     return firebaseSignOut(auth)
   }
 
-  const resetPassword = async (email: string) => {
-    return sendPasswordResetEmail(auth, email)
-  }
-
   return {
     user,
     loading,
-    signIn,
-    signUp,
-    signOut,
-    resetPassword
+    sendSignInLink,
+    isSignInLink,
+    signInWithLink,
+    signOut
   }
 }
