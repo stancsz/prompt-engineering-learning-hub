@@ -1,15 +1,17 @@
-import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
-import { getFirestore } from 'firebase/firestore'
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
 
-  authDomain: import.met
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || '',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || '',
+const firebaseConfig = {
+  apiKey: "AIzaSyDfViiG8mhz-uGDIIEeMaiXB8_ww0mMWx4",
+  authDomain: "prompt-engineering-l.firebaseapp.com",
+  projectId: "prompt-engineering-l",
+  storageBucket: "prompt-engineering-l.firebasestorage.app",
+  messagingSenderId: "1023125908531",
+  appId: "1:1023125908531:web:876c1bb04d7962ce120746",
+  measurementId: "G-N04WCLPJGE"
+};
 
-
-
-
-
-
-
+export const app = initializeApp(firebaseConfig);
+export const analytics = typeof window !== 'undefined' ? getAnalytics(app) : null;
+export const auth = getAuth(app);
