@@ -22,24 +22,24 @@ export function useAuth() {
     return unsubscribe
   }, [])
 
-  const sendSignInLink = async (email: string) => {
-    const actionCodeSettings = {
       url: window.location.origin + window.location.pathname,
       handleCodeInApp: true,
     }
     return sendSignInLinkToEmail(auth, email, actionCodeSettings)
   }
 
-  const isSignInLink = () => {
-    return isSignInWithEmailLink(auth, window.location.href)
+  }
+(auth, window.location.href)
   }
 
-  const signInWithLink = async (email: string) => {
-    return firebaseSignInWithEmailLink(auth, email, window.location.href)
+  }
+mail, window.location.href)
   }
 
-  const signOut = async () => {
-    return firebaseSignOut(auth)
+  }ut = async () => {
+n firebaseSignOut(auth)
+  }
+
   }
 
   return {
@@ -49,5 +49,3 @@ export function useAuth() {
     isSignInLink,
     signInWithLink,
     signOut
-  }
-}
