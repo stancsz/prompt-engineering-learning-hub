@@ -23,11 +23,15 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
         with:
-          # Use a dedicated PAT secret to allow pushing from the workflow.
-          # Create a repo secret named GH_PAGES_PAT with a personal access token (repo scope).
-          github_token: ${{ secrets.GH_PAGES_PAT }}
-          publish_dir: ./dist
-          # The action will create/update the gh-pages branch and set it as the Pages source.
+          path: ./dist
+
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
+        # Deploy uses the automatically-provided GITHUB_TOKEN and the Pages workflow permission.
+        # Ensure repository Actions -> General -> Workflow permissions allows Read and write if you see permission errors.
