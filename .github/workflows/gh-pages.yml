@@ -26,6 +26,8 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # Use a dedicated PAT secret to allow pushing from the workflow.
+          # Create a repo secret named GH_PAGES_PAT with a personal access token (repo scope).
+          github_token: ${{ secrets.GH_PAGES_PAT }}
           publish_dir: ./dist
           # The action will create/update the gh-pages branch and set it as the Pages source.
