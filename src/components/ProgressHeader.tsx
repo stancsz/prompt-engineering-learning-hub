@@ -1,13 +1,19 @@
 import { Progress } from '@/components/ui/progress'
-import { ChartLineUp } from '@phosphor-icons/react'
+import { Button } from '@/components/ui/button'
+import { ChartLineUp, SignIn } from '@phosphor-icons/react'
+import { UserMenu } from './UserMenu'
+import { useAuth } from '@/hooks/useAuth'
 
 interface ProgressHeaderProps {
   completedCount: number
   totalLessons: number
   progressPercentage: number
+  onOpenAuth: () => void
 }
 
-export function ProgressHeader({ completedCount, totalLessons, progressPercentage }: ProgressHeaderProps) {
+export function ProgressHeader({ completedCount, totalLessons, progressPercentage, onOpenAuth }: ProgressHeaderProps) {
+  const { user } = useAuth()
+
   return (
     <div className="bg-card border-b border-border">
       <div className="container mx-auto px-6 py-4 lg:px-12">
@@ -22,11 +28,22 @@ export function ProgressHeader({ completedCount, totalLessons, progressPercentag
             </div>
           </div>
           
-          <div className="flex items-center gap-4 min-w-[200px]">
-            <Progress value={progressPercentage} className="flex-1" />
-            <span className="text-sm font-semibold text-primary min-w-[3ch] text-right">
-              {progressPercentage}%
-            </span>
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-4 min-w-[200px]">
+              <Progress value={progressPercentage} className="flex-1" />
+              <span className="text-sm font-semibold text-primary min-w-[3ch] text-right">
+                {progressPercentage}%
+              </span>
+            </div>
+            
+            {user ? (
+              <UserMenu />
+            ) : (
+              <Button onClick={onOpenAuth} className="gap-2">
+                <SignIn size={18} />
+                Sign In
+              </Button>
+            )}
           </div>
         </div>
       </div>

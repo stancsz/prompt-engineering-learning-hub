@@ -1,6 +1,6 @@
 # Prompt Engineering Learning Platform
 
-An interactive documentation and learning tracker that teaches prompt engineering fundamentals through structured lessons with progress tracking and hands-on practice exercises.
+An interactive documentation and learning tracker that teaches prompt engineering fundamentals through structured lessons with progress tracking and hands-on practice exercises. Now with Firebase authentication for secure user accounts and future cloud sync capabilities.
 
 **Experience Qualities**:
 1. **Educational** - Clear, progressive learning path with well-structured content that builds knowledge incrementally
@@ -8,9 +8,16 @@ An interactive documentation and learning tracker that teaches prompt engineerin
 3. **Motivating** - Visual progress tracking and completion states that encourage continued learning
 
 **Complexity Level**: Light Application (multiple features with basic state)
-- The app manages lesson progress, user notes, and exercise completion states while providing an interactive learning environment with multiple content sections.
+- The app manages lesson progress, user notes, and exercise completion states while providing an interactive learning environment with multiple content sections. Now includes user authentication for personalized experiences.
 
 ## Essential Features
+
+### User Authentication
+- **Functionality**: Email/password sign-up, sign-in, and password reset via Firebase Authentication
+- **Purpose**: Enables personalized learning experiences and future cloud synchronization of progress
+- **Trigger**: User clicks "Sign In" button in header
+- **Progression**: Click Sign In → Choose sign up/sign in → Enter email/password → Authenticated → User menu appears
+- **Success criteria**: Users can create accounts, sign in, sign out, and reset passwords; authentication state persists across page refreshes
 
 ### Lesson Navigation & Progress Tracking
 - **Functionality**: Browse lessons organized by topic with visual progress indicators
@@ -41,6 +48,9 @@ An interactive documentation and learning tracker that teaches prompt engineerin
 - **Success criteria**: Notes save correctly, persist between sessions, and display alongside relevant lessons
 
 ## Edge Case Handling
+- **Unauthenticated users**: App remains fully functional; progress stored locally with banner encouraging sign-in for cloud sync
+- **Authentication errors**: Clear, friendly error messages for common issues (wrong password, email in use, weak password)
+- **Password reset**: Simple flow with email link and confirmation messages
 - **Empty states**: Show encouraging message and getting started guide when no lessons completed yet
 - **Long content**: Implement smooth scrolling and clear section breaks for lengthy lessons
 - **Incomplete exercises**: Allow users to save draft prompts and return later without losing work
@@ -91,6 +101,11 @@ Animations should be subtle and purposeful, reinforcing the sense of progress an
 ## Component Selection
 
 - **Components**: 
+  - `Dialog` for authentication modal with tabs for sign-in/sign-up
+  - `Tabs` for switching between sign-in and sign-up within auth modal
+  - `Avatar` for user profile display in header menu
+  - `DropdownMenu` for user account menu with sign-out option
+  - `Alert` for authentication error messages
   - `Tabs` for switching between lessons, practice, and notes sections
   - `Card` for lesson containers and exercise blocks with subtle shadows
   - `Progress` bar for overall learning completion with coral accent fill
@@ -112,6 +127,10 @@ Animations should be subtle and purposeful, reinforcing the sense of progress an
   - Text inputs: Default (border muted), Focus (border primary + subtle glow), Filled (maintain focus style when content present)
   
 - **Icon Selection**: 
+  - `SignIn` for authentication button
+  - `SignOut` for sign-out menu item
+  - `EnvelopeSimple` for email input fields
+  - `LockKey` for password input fields
   - `BookOpen` for lessons and documentation
   - `CheckCircle` for completed items
   - `Circle` for incomplete items  
