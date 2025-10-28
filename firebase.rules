@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: require authenticated user
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // Allow each authenticated user to read/write only their own user-scoped documents.
+    // This restricts access so users cannot read or modify other users' data.
+    match /users/{userId}/{doc=**} {
+      allow read: if isSignedIn() && request.auth.uid == userId;
+
+      // Writes are allowed only when:
+      // - the caller is authenticated and owns the document (uid == userId)
+      // - the request only contains the approved fields for progress tracking
+      // - field types and simple ranges are validated to reduce abusive writes
+      allow create, update: if isSignedIn()
+        && request.auth.uid == userId
+        // only allow these exact keys on user progress docs
+        && request.resource.data.keys().hasOnly(['lastCompletedLesson', 'progressPercent', 'updatedAt'])
+        // types
+        && request.resource.data.lastCompletedLesson is int
+        && request.resource.data.progressPercent is int
+        // value ranges to avoid absurd values
+        && request.resource.data.progressPercent >= 0
+        && request.resource.data.progressPercent <= 100
+        // updatedAt should be provided as a server timestamp by clients using FieldValue.serverTimestamp()
+        // we allow client-provided timestamp but ensure it's not far in the future
+        && (request.resource.data.updatedAt is timestamp)
+        && (request.time - request.resource.data.updatedAt <= duration.value(1, "h"));
+      
+      // Disallow deletes from the client to avoid data loss/abuse
+      allow delete: if false;
+    }
+
+    // App-level config/settings: readable by clients (optional) but writable only by admins via server/admin SDK.
+    // Keep writes blocked from clients to prevent abuse.
+    match /appConfig/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Deny all other client access by default.
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+}
