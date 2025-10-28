@@ -36,7 +36,7 @@ export function PracticePanel({ lesson, onClose }: PracticePanelProps) {
     setFeedback(null)
 
     try {
-      const evaluationPrompt = `You are an expert prompt engineering instructor. A student has written the following prompt in response to this exercise:
+      const evaluationPromptText = `You are an expert prompt engineering instructor. A student has written the following prompt in response to this exercise:
 
 Exercise: ${currentExercise.prompt}
 Evaluation Criteria: ${currentExercise.evaluationCriteria.join(', ')}
@@ -46,7 +46,7 @@ ${userPrompt}
 
 Provide constructive feedback on their prompt. Be encouraging but specific. Point out what they did well and what could be improved. Keep your feedback under 150 words and actionable.`
 
-      const result = await window.spark.llm(evaluationPrompt, 'gpt-4o-mini', false)
+      const result = await window.spark.llm(evaluationPromptText, 'gpt-4o-mini', false)
       setFeedback(result)
     } catch (error) {
       toast.error('Failed to get feedback. Please try again.')
