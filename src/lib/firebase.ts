@@ -6,8 +6,8 @@ const firebaseConfig = {
   authDomain: "prompt-engineering-l.firebaseapp.com",
   projectId: "prompt-engineering-l",
   storageBucket: "prompt-engineering-l.firebasestorage.app",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef123456"
+
+
 };
 
 const app = initializeApp(firebaseConfig);
